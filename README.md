@@ -1,118 +1,153 @@
-LangGraph Sentiment Classifier
+# 💥 LangGraph Classifier: Confidence-Driven Text Classification with Fallback
 
-A robust and self-healing text classification system built with LangGraph, fine-tuned transformers, and fallback logic to ensure accurate and reliable sentiment prediction.
+**A self-healing NLP pipeline that doesn't just guess — it checks itself before it wrecks itself.**
 
-🎯 Objective
+---
 
-This project classifies text (e.g., movie reviews) as either POSITIVE or NEGATIVE using a fine-tuned DistilBERT model. When prediction confidence is low, it triggers a fallback strategy to recover gracefully using either user clarification or a backup model.
+## 📌 Overview
 
-🛠️ Features
+This project is a **LangGraph-powered text classification system** designed to prioritize **correctness** over blind automation.
 
-✅ Fine-tuned transformer model for sentiment classification
+* 🔍 Fine-tuned DistilBERT model for sentiment analysis
+* 🧠 Confidence-check mechanism using LangGraph DAG
+* 🛡️ Fallback strategies: **zero-shot classifier** or **manual user clarification**
+* 🖥️ Clean CLI interface with **explainable predictions**
+* 📊 Logging for decisions, confidence, and fallback tracking
 
-🔁 LangGraph DAG with conditional fallback logic
+---
 
-🔍 Confidence-based prediction acceptance or clarification
+## 🛠️ Features
 
-🧠 Optional zero-shot fallback model
+* ✅ **Transformer fine-tuning (LoRA)** on a sentiment dataset
+* 🧩 **Modular LangGraph DAG** with custom nodes:
 
-🧾 CLI interface for human-in-the-loop review
+  * `InferenceNode`: Makes the prediction
+  * `ConfidenceCheck`: Decides if prediction is confident enough
+  * `FallbackNode`: Asks for clarification or uses zero-shot
+* 🧵 **CLI Loop** for interaction with user
+* 📈 **Logging system** for predictions, fallback use, and confidence scores
+* 🧠 Smart defaults but totally hackable
 
-📊 Logging-ready design for tracking model decisions (expandable)
+---
 
-📁 Project Structure
+## 🚀 Quickstart
 
-langgraph_classifier/
-├── classifier_graph.py       # LangGraph DAG and node logic
-├── cli_interface.py          # User CLI for interaction
-├── train_model.py            # Fine-tuning script
-├── load_data.py              # Dataset loading & preprocessing
-├── requirements.txt          # Dependencies
-├── .gitignore                # Ignores large and unnecessary files
-└── README.md                 # You are here
+### 🔧 Installation
 
-📦 Installation
-
+```bash
 git clone https://github.com/<your-username>/Langgraph-Classifier.git
 cd Langgraph-Classifier
-python -m venv env
-source env/bin/activate  # On Windows: .\env\Scripts\activate
 pip install -r requirements.txt
+```
 
-🚀 Usage
+---
 
-🔧 Model Setup
+### 💾 Model Setup
 
-The trained model isn't pushed to GitHub due to size. Download it from:
+Since GitHub hates large files, download the fine-tuned model from here:
 
-🔗 Google Drive Model Folder
+👉 [Download Fine-tuned DistilBERT (Google Drive)](https://drive.google.com/drive/folders/1Pc0qavHOBYGJQhymgKH1B1txiql4u7KE)
 
-Unzip it and place the folder as ./model in the project directory.
+After downloading, **extract the model into the root folder** like this:
 
-🧪 Run CLI Classifier
+```
+Langgraph-Classifier/
+├── model/
+│   ├── config.json
+│   ├── pytorch_model.bin
+│   ├── tokenizer.json
+│   └── ...
+```
 
+---
+
+### ⚙️ Run the Classifier
+
+```bash
 python cli_interface.py
+```
 
-You'll be greeted with:
+You'll see:
 
+```
 🤖 Welcome to the LangGraph Classifier CLI!
-> This movie was awful
+Type a sentence to classify (or type 'exit' to quit):
+```
 
-If confidence is low, you'll be prompted for clarification:
+Example:
 
-🤔 Confidence is low. Let's clarify before deciding.
-Did you mean this to be a POSITIVE or NEGATIVE statement?
+```
+> This movie was painfully slow and boring.
 
-🧠 How It Works
+🔍 Classifying input text...
+[InferenceNode] Predicted label: Positive | Confidence: 0.52
+[ConfidenceCheckNode] Confidence too low. Triggering fallback...
+[FallbackNode] Did you mean this to be a POSITIVE or NEGATIVE statement?
+User: Negative
+Final Label: Negative ✅
+```
 
-🔄 DAG Flow
+---
 
-[Input Text] → InferenceNode
-       ↳ High Confidence → ✅ END
-       ↳ Low Confidence → FallbackNode (user clarification)
-                                  ↳ END
+## 🧬 LangGraph DAG Design
 
-InferenceNode: Runs classification using fine-tuned DistilBERT.
+Here's how the pipeline flows:
 
-ConfidenceCheck: Inline conditional logic (threshold = 0.6).
+```mermaid
+graph TD
+    A[User Input] --> B[InferenceNode]
+    B -->|High Confidence| D[End]
+    B -->|Low Confidence| C[FallbackNode]
+    C --> D
+```
 
-FallbackNode: Prompts user to confirm sentiment manually.
+---
 
-🏋️ Model Training
+## 📁 Project Structure
 
-Want to train your own? Run:
+```
+Langgraph-Classifier/
+├── classifier_graph.py     # LangGraph DAG + Nodes
+├── cli_interface.py        # CLI loop
+├── train_model.py          # Fine-tune DistilBERT using LoRA
+├── load_data.py            # Dataset prep
+├── logs/                   # Prediction + fallback logs
+├── model/                  # (Ignored by git)
+├── requirements.txt
+└── README.md
+```
 
-python train_model.py
+---
 
-This script fine-tunes DistilBERT using the IMDb dataset via HuggingFace Datasets, with LoRA for parameter-efficient training.
+## 📜 Logging Output
 
-📜 Requirements
+Every prediction is logged with:
 
-Install dependencies from requirements.txt. Key packages include:
+* Timestamp
+* Input sentence
+* Predicted label
+* Confidence score
+* Whether fallback was used
 
-transformers
-peft
-langgraph
-accelerate
-torch
-scikit-learn
+Logs live in `/logs/classification_log.txt`
 
-📹 Demo
+---
 
-🧪 CLI + fallback logic showcased in:
-demo.mp4 (or add a YouTube link)
+## 📹 Demo Video (Optional)
 
-📚 References
+> Coming soon... (Drop your YouTube or Drive demo link here)
 
-LangGraph Docs
+---
 
-Hugging Face Transformers
+## 📣 Credits
 
-LoRA Paper
+* ⚙️ Built by [Afham2263](https://github.com/Afham2263)
+* 🧠 Powered by 🤗 Hugging Face + 🧱 LangGraph + 🐍 PyTorch
+* 🎯 Inspired by real-world fallback strategies in production ML pipelines
 
-👨‍💻 Author
-by Afham
+---
 
-📜 License
+## 🤝 License
 
-MIT License. 
+MIT. Use, remix, and build something cooler.
+
