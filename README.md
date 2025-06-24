@@ -141,12 +141,12 @@ Logs live in `/logs/classification_log.txt`
 
 * ⚙️ Built by [Afham2263](https://github.com/Afham2263)
 * 🧠 Powered by 🤗 Hugging Face + 🧱 LangGraph + 🐍 PyTorch
-* 🎯 Inspired by real-world fallback strategies in production ML pipelines
+
 
 ---
 
 ## 🤝 License
 
-MIT. Use, remix, and build something cooler.
+MIT.
 
 
