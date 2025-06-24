@@ -1,4 +1,6 @@
-# 💥 LangGraph Classifier: Confidence-Driven Text Classification with Fallback
+
+
+#💥 LangGraph Classifier: Confidence-Driven Text Classification with Fallback
 
 **A self-healing NLP pipeline that doesn't just guess — it checks itself before it wrecks itself.**
 
@@ -150,4 +152,5 @@ Logs live in `/logs/classification_log.txt`
 ## 🤝 License
 
 MIT. Use, remix, and build something cooler.
+
 
