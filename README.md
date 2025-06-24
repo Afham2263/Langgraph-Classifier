@@ -135,11 +135,7 @@ Logs live in `/logs/classification_log.txt`
 
 ---
 
-## 📹 Demo Video (Optional)
 
-> Coming soon... (Drop your YouTube or Drive demo link here)
-
----
 
 ## 📣 Credits
 
