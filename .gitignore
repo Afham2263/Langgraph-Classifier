@@ -1,0 +1,19 @@
+# Ignore model weights and big data files
+model/
+*.pt
+*.bin
+*.log
+
+# Ignore notebooks crap
+*.ipynb_checkpoints
+
+# Ignore Python cache
+__pycache__/
+*.pyc
+
+# Ignore virtual environments
+env/
+.env
+
+# macOS garbage
+.DS_Store
