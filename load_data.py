@@ -10,7 +10,7 @@ print("Loading IMDb dataset...")
 dataset = load_dataset("imdb")
 
 # Reduce dataset size for faster debugging
-print("🔪 Truncating dataset to 2000 train and 500 test samples...")
+print(" Truncating dataset to 2000 train and 500 test samples...")
 dataset["train"] = dataset["train"].select(range(2000))
 dataset["test"] = dataset["test"].select(range(500))
 
@@ -29,4 +29,4 @@ dataset.set_format(type="torch", columns=["input_ids", "attention_mask", "labels
 torch.save(dataset["train"], os.path.join(SAVE_DIR, "train.pt"))
 torch.save(dataset["test"], os.path.join(SAVE_DIR, "test.pt"))
 
-print("✅ Done! Tokenized data saved to ./data/")
+print(" Done! Tokenized data saved to ./data/")
