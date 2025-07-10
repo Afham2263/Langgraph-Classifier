@@ -26,7 +26,7 @@ def log_classification(state: ClassificationState):
         ])
 
 def classify_text(text: str):
-    print("\n🔍 Classifying input text...")
+    print("\n Classifying input text...")
     result = classifier_app.invoke({"input_text": text})
     print("\n=== Classification Result ===")
     print(f"Label:         {result['prediction']}")
@@ -36,12 +36,12 @@ def classify_text(text: str):
     log_classification(result)
 
 if __name__ == "__main__":
-    print("\n🤖 Welcome to the LangGraph Classifier CLI!")
+    print("\n Welcome to the LangGraph Classifier CLI!")
     print("Type a sentence to classify (or type 'exit' to quit):")
     while True:
         user_input = input("> ").strip()
         if user_input.lower() in ["exit", "quit"]:
-            print("👋 Bye!")
+            print(" Bye!")
             sys.exit()
         elif user_input:
             classify_text(user_input)
