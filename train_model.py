@@ -10,7 +10,7 @@ import torch
 import os
 
 # === Load tokenized data ===
-print("🔄 Loading tokenized dataset from ./data...")
+print(" Loading tokenized dataset from ./data...")
 train_dataset = torch.load("./data/train.pt", weights_only=False)
 eval_dataset = torch.load("./data/test.pt", weights_only=False)
 
@@ -19,14 +19,14 @@ train_dataset = train_dataset.select(range(1000))
 eval_dataset = eval_dataset.select(range(200))
 
 # === Load tokenizer and base model ===
-print("📦 Loading tokenizer and base model...")
+print(" Loading tokenizer and base model...")
 tokenizer = AutoTokenizer.from_pretrained("distilbert-base-uncased")
 base_model = AutoModelForSequenceClassification.from_pretrained(
     "distilbert-base-uncased", num_labels=2
 )
 
 # === Apply LoRA config ===
-print("⚙️ Applying LoRA...")
+print(" Applying LoRA...")
 peft_config = LoraConfig(
     task_type=TaskType.SEQ_CLS,
     inference_mode=False,
@@ -42,7 +42,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model.to(device)
 
 # === Training arguments ===
-print("🛠️ Setting training args...")
+print(" Setting training args...")
 training_args = TrainingArguments(
     output_dir="./model",
     evaluation_strategy="epoch",
@@ -62,7 +62,7 @@ training_args = TrainingArguments(
 data_collator = DataCollatorWithPadding(tokenizer=tokenizer)
 
 # === Define Trainer ===
-print("🚂 Starting training with Trainer...")
+print(" Starting training with Trainer...")
 trainer = Trainer(
     model=model,
     args=training_args,
@@ -75,8 +75,8 @@ trainer = Trainer(
 trainer.train()
 
 # === Save model and tokenizer ===
-print("💾 Saving model and tokenizer to ./model...")
+print(" Saving model and tokenizer to ./model...")
 model.save_pretrained("./model")
 tokenizer.save_pretrained("./model")
 
-print("✅ Done training!")
+print(" Done training!")
