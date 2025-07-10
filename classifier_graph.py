@@ -47,7 +47,7 @@ def confidence_condition(state: ClassificationState) -> str:
 
 # === Node: Fallback logic (User Clarification) ===
 def clarify_with_user(state: ClassificationState) -> ClassificationState:
-    print("\n🤔 Confidence is low. Let's clarify before deciding.")
+    print("\n Confidence is low. Let's clarify before deciding.")
     user_input = input("Did you mean this to be a POSITIVE or NEGATIVE statement?\n> ").strip().upper()
 
     while user_input not in ["POSITIVE", "NEGATIVE"]:
